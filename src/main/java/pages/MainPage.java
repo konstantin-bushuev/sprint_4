@@ -4,11 +4,15 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static util.EnvConfig.BASE_URL;
+import java.time.Duration;
+import static util.EnvConfig.*;
 
 public class MainPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     private final By cookieButton = By.id("rcc-confirm-button");
     private final By faqSection = By.className("Home_FAQ__3uVm4");
@@ -19,6 +23,7 @@ public class MainPage {
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(EXPLICITLY_TIMEOUT));
     }
 
 
@@ -27,6 +32,7 @@ public class MainPage {
     }
 
     public void clickOnCookieButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(cookieButton));
         driver.findElement(cookieButton).click();
     }
 
@@ -36,17 +42,20 @@ public class MainPage {
     }
 
     public void clickOnQuestion(String index) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id(String.format(questionItem, index))));
         driver.findElement(By.id(String.format(questionItem, index))).click();
     }
 
     public void checkAnswerText(String index, String expectedAnswerText) {
         clickOnQuestion(index);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(String.format(answerItem, index))));
         String actualAnswerText = driver.findElement(By.id(String.format(answerItem, index))).getText();
         Assert.assertEquals("Ошибка в тексте ответа", expectedAnswerText, actualAnswerText);
     }
 
 
     public void clickOnTopOrderButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(topOrderButton));
         driver.findElement(topOrderButton).click();
     }
 
@@ -56,6 +65,7 @@ public class MainPage {
     }
 
     public void clickOnBottomOrderButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(bottomOrderButton));
         driver.findElement(bottomOrderButton).click();
     }
 }

@@ -1,3 +1,4 @@
+import data.ScooterOrderTestData;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -5,7 +6,6 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.OrderPage;
-import static util.ScooterColor.*;
 
 @RunWith(Parameterized.class)
 public class ScooterOrderTest {
@@ -35,12 +35,9 @@ public class ScooterOrderTest {
         this.comment = comment;
     }
 
-    @Parameterized.Parameters
-    public static Object[][] getParameters1() {
-        return new Object[][]{
-                {"Марина", "Сергеева", "пр-т Вернадского, 88", "Юго-Западная", "+79888888888", "21.08.2025", "сутки", BLACK, "Привет!"},
-                {"Катя", "Алексеева", "ул.Усачева, 62", "Спортивная", "+79889999999", "27.08.2025", "трое суток", GREY, "Позвоните мне, пожалуйста, за полчаса"},
-        };
+    @Parameterized.Parameters(name = "Тестовые даныне: имя {0}, фамилия {1}, адрес {2}, станция метро {3}, номер телефона {4}, дата доставки {5}, срок аренды {6}, цвет самоката {7}, комментарий для курьера {8}")
+    public static Object[][] getParameters() {
+        return ScooterOrderTestData.ORDER_TEST_DATA;
     }
 
     @Rule

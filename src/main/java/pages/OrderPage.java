@@ -2,11 +2,17 @@ package pages;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
+import static util.EnvConfig.EXPLICITLY_TIMEOUT;
 import static util.ScooterColor.BLACK;
 
 public class OrderPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     private final By firstNameField = By.xpath(".//div[@class='Order_Form__17u6u']/div[1]/input");
     private final By lastNameField = By.xpath(".//div[@class='Order_Form__17u6u']/div[2]/input");
@@ -27,10 +33,12 @@ public class OrderPage {
 
     public OrderPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(EXPLICITLY_TIMEOUT));
     }
 
 
     public void sendFirstName(String firstName) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField));
         driver.findElement(firstNameField).sendKeys(firstName);
     }
 
@@ -44,6 +52,7 @@ public class OrderPage {
 
     public void sendMetro(String metro) {
         driver.findElement(metroField).sendKeys(metro);
+        wait.until(ExpectedConditions.elementToBeClickable(metroChoice));
         driver.findElement(metroChoice).click();
     }
 
@@ -52,6 +61,7 @@ public class OrderPage {
     }
 
     public void clickOnGoOnButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(goOnButton));
         driver.findElement(goOnButton).click();
     }
 
@@ -66,6 +76,7 @@ public class OrderPage {
 
 
     public void sendWhen (String when) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(whenField));
         WebElement element = driver.findElement(whenField);
         element.sendKeys(when);
         element.click();
@@ -73,6 +84,7 @@ public class OrderPage {
 
     public void sendDuration (String duration)  {
         driver.findElement(durationDropdown).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(String.format(durationItem, duration))));
         driver.findElement(By.xpath(String.format(durationItem, duration))).click();
     }
 
@@ -97,6 +109,7 @@ public class OrderPage {
     }
 
     public void clickOnMakeOrderButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(makeOrderButton));
         driver.findElement(makeOrderButton).click();
     }
 
@@ -110,6 +123,7 @@ public class OrderPage {
 
 
     public void confirmOrder() {
+        wait.until(ExpectedConditions.elementToBeClickable(yesButton));
         driver.findElement(yesButton).click();
     }
 
