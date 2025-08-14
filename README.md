@@ -22,12 +22,14 @@ main / java / pages /
 - MainPage - Главная страница
 - OrderPage - Страница оформления заказа
 
-test / java / tests / 
+main / java / util / - Константы
+
+test / java / 
 - FAQTest - Тест списка 
 - ScooterOrderTest - Тесты заказа скутера
 - DriverFactory
 
-main / java / util / - Константы
+test / java / data / - Тестовые данные
 
 ## Запуск тестов
 
